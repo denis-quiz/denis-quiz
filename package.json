@@ -2,8 +2,11 @@
   "name": "monorepo",
   "private": true,
   "packageManager": "npm@11.13.0",
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": [
+    "apps/*"
+  ],
   "devDependencies": {
+    "eslint-config-prettier": "^10.1.8",
     "turbo": "^2.x"
   },
   "scripts": {
