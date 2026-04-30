@@ -38,7 +38,7 @@ In order to clone the project to your local machine:
 
 ```sh
 git clone git@bitbucket.org:denis-quiz/denis-quiz.git
-````
+```
 
 
 ## 📦 Installation
@@ -61,13 +61,16 @@ Then open http://localhost:3001
 ## 🤝 In order to contribute
 
 1. Create a new branch:
-   ```sh
+```sh
    git checkout -b feature/your-feature-name
+```
 
 2. Commit your changes:
-    ```sh
+```sh
    git commit -m "Describe your changes"
+```
 
 3. Push to a feature remote:
-    ```sh
+```sh
    git push origin feature/your-feature-name
+```
