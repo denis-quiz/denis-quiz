@@ -26,6 +26,15 @@ dist/
 # JetBrains IDE
 .idea/
 
+# env
+*.env*
+
+# turbo folder
+/.turbo
+
+#next
+.next/
+
 # Unit test reports
 TEST*.xml
 
