@@ -8,16 +8,20 @@
   },
   "dependencies": {
     "@hono/node-server": "^1.19.14",
+    "@neondatabase/serverless": "^1.1.0",
+    "dotenv": "^17.4.2",
+    "drizzle-orm": "^0.45.2",
     "hono": "^4.12.15"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/node": "^20.11.17",
+    "drizzle-kit": "^0.31.10",
     "eslint": "^10.2.1",
+    "eslint-plugin-prettier": "^5.5.5",
     "globals": "^17.5.0",
-    "tsx": "^4.7.1",
+    "tsx": "^4.21.0",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.59.1",
-    "eslint-plugin-prettier": "^5.5.5"
+    "typescript-eslint": "^8.59.1"
   }
 }
