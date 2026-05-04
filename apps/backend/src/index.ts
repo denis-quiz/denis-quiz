@@ -3,6 +3,7 @@ import { Hono } from "hono";
 import { neon } from "@neondatabase/serverless";
 import "dotenv/config";
 import { drizzle } from "drizzle-orm/neon-http";
+
 const app = new Hono();
 
 const db = drizzle(process.env.DATABASE_URL!);
