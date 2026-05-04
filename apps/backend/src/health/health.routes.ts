@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 import { getDbHealth } from "./health.service.js";
-import type { NeonQueryFunction } from "@neondatabase/serverless";
-export function healthRoutes(app: Hono, sql: NeonQueryFunction<false, false>) {
+import type { NeonHttpDatabase } from "drizzle-orm/neon-http";
+export function healthRoutes(app: Hono, db: NeonHttpDatabase) {
   app.get("/api/health", (c) => c.json({ status: "OK" }));
 
-  app.get("/api/dbHealth", (c) => getDbHealth(c, sql));
+  app.get("/api/dbHealth", (c) => getDbHealth(c, db));
 }

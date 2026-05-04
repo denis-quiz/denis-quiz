@@ -1,12 +1,13 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import "dotenv/config";
-import { neon } from "@neondatabase/serverless";
+import { db } from "./db/db.js";
 import { healthRoutes } from "./health/health.routes.js";
+import { quizzesRoutes } from "./quizzes/quizzes.routes.js";
 
 const app = new Hono();
-const sql = neon(process.env.DATABASE_URL!);
 
-healthRoutes(app, sql);
+healthRoutes(app, db);
+quizzesRoutes(app, db);
 
 serve(app);
