@@ -7,7 +7,6 @@ import { cors } from "hono/cors";
 import { healthRoutes } from "./health/health.routes.js";
 import { quizzesRoutes } from "./quizzes/quizzes.routes.js";
 import { authenticationRoutes } from "./auth/auth.routes.js";
-import {sql} from "drizzle-orm";
 
 const app = new Hono();
 
