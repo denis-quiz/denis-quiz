@@ -30,8 +30,10 @@ dist/
 *.env*
 
 # turbo folder
-/.turbo
+.turbo/
 
+# to prevent nested locfiles in monorepo env
+apps/**/package-lock.json
 #next
 .next/
 
