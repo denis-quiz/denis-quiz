@@ -1,18 +1,21 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
+import { neon } from "@neondatabase/serverless";
+import "dotenv/config";
+import { drizzle } from "drizzle-orm/neon-http";
 
 const app = new Hono();
 
-app.get("/", (c) => {
-  return c.text("Hello Hono!");
+const db = drizzle(process.env.DATABASE_URL!);
+app.get("/", async (c) => {
+  try {
+    const sql = neon(process.env.DATABASE_URL!);
+    const response = await sql`SELECT version()`;
+    return c.json({ version: response[0]?.version });
+  } catch (error) {
+    console.error("Database query failed:", error);
+    return c.text("Failed to connect to database", 500);
+  }
 });
 
-serve(
-  {
-    fetch: app.fetch,
-    port: 3000,
-  },
-  (info) => {
-    console.log(`Server is running on http://localhost:${info.port}`);
-  },
-);
+serve(app);

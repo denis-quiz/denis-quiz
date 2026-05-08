@@ -21,21 +21,24 @@ dist/
 
 # Maven
 target/
-dist/
 
 # JetBrains IDE
 .idea/
 
 # env
 *.env*
+!.env.example
 
 # turbo folder
 .turbo/
 
-# to prevent nested lockfiles in monorepo env
+# to prevent nested locfiles in monorepo env
 apps/**/package-lock.json
+
 #next
 .next/
+out/
+.next/cache/
 
 # Unit test reports
 TEST*.xml

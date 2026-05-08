@@ -1,0 +1,28 @@
+import { signIn } from "@/lib/auth/auth-client";
+
+export async function signInUser(email: string, password: string) {
+  return await signIn.email(
+    {
+      /**
+       * The user email
+       */
+      email,
+      /**
+       * The user password
+       */
+      password,
+      /**
+       * A URL to redirect to after the user verifies their email (optional)
+       */
+      callbackURL: "/dashboard",
+      /**
+       * remember the user session after the browser is closed.
+       * @default true
+       */
+      rememberMe: false,
+    },
+    {
+      //callbacks
+    },
+  );
+}
