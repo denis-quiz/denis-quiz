@@ -16,8 +16,7 @@
     "better-auth": "^1.6.9",
     "dotenv": "^17.4.2",
     "drizzle-orm": "^0.45.2",
-    "hono": "^4.12.15",
-    "pg": "^8.20.0"
+    "hono": "^4.12.15"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
