@@ -10,16 +10,17 @@ export async function getQuizzes(c: Context, db: NeonHttpDatabase) {
 export async function postQuizzes(c: Context, db: NeonHttpDatabase) {
   try {
     const body = await c.req.json();
+    const user = c.get("user");
 
-    if (!body?.name || !body?.userId) {
-      return c.json({ error: "Missing required fields: name, userId" }, 400);
+    if (!body?.name) {
+      return c.json({ error: "Missing required field: name" }, 400);
     }
 
     const result = await db
       .insert(quizzes)
       .values({
         name: body.name,
-        userId: body.userId,
+        userId: user.id,
       })
       .returning();
 

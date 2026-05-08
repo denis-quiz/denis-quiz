@@ -1,7 +1,8 @@
 "use client";
 
-import {useState} from "react";
-import {signUpUser} from "@/lib/auth/sign-up";
+import { useState } from "react";
+import { signUpUser } from "@/lib/auth/sign-up";
+import { inputClass, labelClass } from "@/lib/styles/form";
 
 export default function SignUpForm() {
   const [email, setEmail] = useState("");
@@ -20,11 +21,6 @@ export default function SignUpForm() {
 
     await signUpUser(email, password, name, image);
   }
-
-  const inputClass =
-    "block w-full rounded-md bg-white/5 px-3 py-2 text-white placeholder:text-gray-400 outline outline-1 outline-white/10 focus:outline-indigo-500 sm:text-sm";
-
-  const labelClass = "block text-sm font-medium text-white";
 
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 bg-black">
