@@ -1,9 +1,14 @@
 {
+<<<<<<< HEAD
   "id": "33e6924a-540e-4549-977c-56cf64309599",
+=======
+  "id": "01db4405-4fcf-46dd-ac2c-cc121176283e",
+>>>>>>> DQ-8-setup-bazy-danych-neondb-i-integrac
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+<<<<<<< HEAD
     "public.account": {
       "name": "account",
       "schema": "",
@@ -126,6 +131,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+=======
+>>>>>>> DQ-8-setup-bazy-danych-neondb-i-integrac
     "public.quizzes": {
       "name": "quizzes",
       "schema": "",
@@ -138,12 +145,18 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+<<<<<<< HEAD
     "public.session": {
       "name": "session",
+=======
+    "public.users": {
+      "name": "users",
+>>>>>>> DQ-8-setup-bazy-danych-neondb-i-integrac
       "schema": "",
       "columns": {
         "id": {
           "name": "id",
+<<<<<<< HEAD
           "type": "text",
           "primaryKey": true,
           "notNull": true
@@ -251,11 +264,38 @@
         "name": {
           "name": "name",
           "type": "text",
+=======
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "users_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "age": {
+          "name": "age",
+          "type": "integer",
+>>>>>>> DQ-8-setup-bazy-danych-neondb-i-integrac
           "primaryKey": false,
           "notNull": true
         },
         "email": {
           "name": "email",
+<<<<<<< HEAD
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -286,14 +326,24 @@
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
+=======
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+>>>>>>> DQ-8-setup-bazy-danych-neondb-i-integrac
         }
       },
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
+<<<<<<< HEAD
         "user_email_unique": {
           "name": "user_email_unique",
+=======
+        "users_email_unique": {
+          "name": "users_email_unique",
+>>>>>>> DQ-8-setup-bazy-danych-neondb-i-integrac
           "nullsNotDistinct": false,
           "columns": [
             "email"
@@ -303,6 +353,7 @@
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
+<<<<<<< HEAD
     },
     "public.verification": {
       "name": "verification",
@@ -370,6 +421,8 @@
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
+=======
+>>>>>>> DQ-8-setup-bazy-danych-neondb-i-integrac
     }
   },
   "enums": {},
