@@ -1,6 +1,7 @@
 import type { Context } from "hono";
 import type { NeonHttpDatabase } from "drizzle-orm/neon-http";
 import { quizzes } from "../db/schema/quizzes.js";
+import { QuizBody } from "../../lib/quizBody.js";
 
 export async function getQuizzes(c: Context, db: NeonHttpDatabase) {
   const result = await db.select().from(quizzes);
@@ -9,17 +10,18 @@ export async function getQuizzes(c: Context, db: NeonHttpDatabase) {
 
 export async function postQuizzes(c: Context, db: NeonHttpDatabase) {
   try {
-    const body = await c.req.json();
+    const body = QuizBody.parse(await c.req.json());
+    const user = c.get("user");
 
-    if (!body?.name || !body?.userId) {
-      return c.json({ error: "Missing required fields: name, userId" }, 400);
+    if (!body?.title) {
+      return c.json({ error: "Missing required fields: name" }, 400);
     }
 
     const result = await db
       .insert(quizzes)
       .values({
-        name: body.name,
-        userId: body.userId,
+        title: body.title,
+        userId: user.id,
       })
       .returning();
 
