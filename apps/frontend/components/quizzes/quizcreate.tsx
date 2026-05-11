@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { quizCreate } from "@/lib/quizzes/quiz-create";
-import { inputClass, labelClass } from "@/lib/styles/form";
+import { buttonClass, inputClass, labelClass } from "@/lib/styles/form";
 
 export default function QuizCreateForm() {
   const [name, setName] = useState("");
@@ -29,7 +29,9 @@ export default function QuizCreateForm() {
               className={inputClass}
             />
           </div>
-          <button type="submit">create</button>
+          <button type="submit" className={buttonClass}>
+            create
+          </button>
         </form>
       </div>
     </div>
