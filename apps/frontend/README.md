@@ -1,11 +1,30 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## ⚙️ Environment Setup
+
+Create a `.env` file based on the provided example:
+
+```sh
+frontend/.env.example
+```
+
+Copy it and fill in the required values:
+
+```sh
+cp frontend/.env.example frontend/.env
+```
+
+Ensure all environment variables (e.g. database URL, secrets) are properly configured.
+
+---
+
 ## Getting Started
 
-First, run the development server:
+To run the development server:
 
 ```bash
 npm run dev
+
 
 
 Open [http://localhost:3001](http://localhost:3001) with your browser to see the result.
