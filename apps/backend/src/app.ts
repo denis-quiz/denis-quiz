@@ -7,6 +7,7 @@ import { cors } from "hono/cors";
 import { healthRoutes } from "./health/health.routes.js";
 import { quizzesRoutes } from "./quizzes/quizzes.routes.js";
 import { authenticationRoutes } from "./auth/auth.routes.js";
+import {profileRoutes} from "./profile/profile.routes.js";
 
 const app = new Hono();
 
@@ -20,6 +21,7 @@ app.use(
 
 healthRoutes(app, db);
 quizzesRoutes(app, db);
+profileRoutes(app, db);
 authenticationRoutes(app);
 
 serve(app);
