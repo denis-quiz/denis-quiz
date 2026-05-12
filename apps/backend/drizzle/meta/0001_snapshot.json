@@ -1,6 +1,6 @@
 {
-  "id": "e3360141-0d87-42e1-a95b-42a3635ad613",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "846198bf-0373-4b95-8027-0980f82af52e",
+  "prevId": "e3360141-0d87-42e1-a95b-42a3635ad613",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -153,15 +153,29 @@
           "primaryKey": false,
           "notNull": true
         },
-        "userId": {
-          "name": "userId",
-          "type": "integer",
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "quizzes_user_id_user_id_fk": {
+          "name": "quizzes_user_id_user_id_fk",
+          "tableFrom": "quizzes",
+          "tableTo": "user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
