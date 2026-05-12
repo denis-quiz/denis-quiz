@@ -6,7 +6,7 @@ import { BannerAlert, TraditionalAlert } from "@/components/ui/alerts";
 import { buttonClass } from "@/lib/styles/form";
 
 export default function QuizCreateForm() {
-  const [name, setName] = useState("");
+  const [title, setTitle] = useState("");
 
   const [alert, setAlert] = useState<{
     type: "error" | "success";
@@ -19,7 +19,7 @@ export default function QuizCreateForm() {
 
     setAlert(null);
 
-    if (!name.trim()) {
+    if (!title.trim()) {
       setAlert({
         type: "error",
         title: "Error",
@@ -28,7 +28,7 @@ export default function QuizCreateForm() {
       return;
     }
 
-    if (name.trim().length < 3) {
+    if (title.trim().length < 3) {
       setAlert({
         type: "error",
         title: "Error",
@@ -38,7 +38,7 @@ export default function QuizCreateForm() {
     }
 
     try {
-      await quizCreate(name.trim());
+      await quizCreate(title.trim());
 
       setAlert({
         type: "success",
@@ -46,7 +46,7 @@ export default function QuizCreateForm() {
         text: "Quiz created successfully",
       });
 
-      setName("");
+      setTitle("");
     } catch (err) {
       setAlert({
         type: "error",
@@ -60,11 +60,12 @@ export default function QuizCreateForm() {
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 bg-black">
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form onSubmit={handleSubmit} className="space-y-6">
+          <label htmlFor={title}>title</label>
           <input
-            id="name"
+            id="title"
             type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             className="border p-2 w-full"
           />
 

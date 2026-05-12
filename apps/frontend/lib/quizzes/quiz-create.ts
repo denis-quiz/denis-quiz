@@ -1,5 +1,5 @@
 export async function quizCreate(title: string) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL!}/api/quizze`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL!}/api/quizzes`, {
     method: "POST",
     credentials: "include",
     headers: {
