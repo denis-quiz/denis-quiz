@@ -15,6 +15,13 @@
       "when": 1778245828332,
       "tag": "0001_young_mattie_franklin",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1778584244591,
+      "tag": "0002_elite_ultimo",
+      "breakpoints": true
     }
   ]
 }

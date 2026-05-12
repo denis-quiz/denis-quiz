@@ -22,6 +22,8 @@ export const metadata: Metadata = {
 export const sideBarLinks: SideBarLinkType[] = [
   { name: "Login", path: "/signin" },
   { name: "Quiz Creator", path: "/quizcreate" },
+  { name: "Profile", path: "/userprofile" },
+  { name: "Settings", path: "/settings" },
 ];
 export default function RootLayout({
   children,
