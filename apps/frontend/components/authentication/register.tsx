@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { signUpUser } from "@/lib/auth/sign-up";
-import {buttonClass, inputClass, labelClass} from "@/lib/styles/form";
+import { buttonClass, inputClass, labelClass } from "@/lib/styles/form";
 
 export default function SignUpForm() {
   const [email, setEmail] = useState("");
@@ -118,10 +118,7 @@ export default function SignUpForm() {
 
           {/* Submit */}
           <div>
-            <button
-              type="submit"
-              className={buttonClass}
-            >
+            <button type="submit" className={buttonClass}>
               Sign up
             </button>
           </div>

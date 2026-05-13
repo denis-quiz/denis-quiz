@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { signInUser } from "@/lib/auth/sign-in";
-import { router } from "next/client";
 
 export default function SignInForm() {
   const [email, setEmail] = useState("");
@@ -77,7 +76,7 @@ export default function SignInForm() {
         </form>
         <h4 className="mt-6 text-center text-sm text-white">
           If you don&#39;t have account yet{" "}
-          <a href="/signup" className="hover:text-indigo-300 text-blue-500">
+          <a href="/register" className="hover:text-indigo-300 text-blue-500">
             Click here
           </a>
         </h4>
