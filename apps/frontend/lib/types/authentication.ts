@@ -1,0 +1,3 @@
+export type SignInResult =
+  | { ok: true }
+  | { ok: false; message: string };

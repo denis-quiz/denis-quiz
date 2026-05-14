@@ -1,10 +1,16 @@
+import { getApiUrl } from "@/lib/api";
+
 export async function getSessionProfile() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL!}/api/profile`, {
+  const res = await fetch(`${getApiUrl()}/api/profile`, {
     method: "GET",
     credentials: "include",
   });
   if (!res.ok) {
-    throw new Error(await res.text());
+    if (res.status === 401) {
+      throw new Error("Unauthorized");
+    }
+
+    throw new Error("Failed to load profile");
   }
 
   return res.json();

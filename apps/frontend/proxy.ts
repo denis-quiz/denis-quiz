@@ -1,17 +1,49 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { getSessionCookie } from "better-auth/cookies";
-// This function can be marked `async` if using `await` inside
-export function proxy(request: NextRequest) {
-  const session = getSessionCookie(request);
+import { getApiUrl } from "@/lib/api";
 
-  if (!session) {
-    return NextResponse.redirect(new URL("/login?reason=auth", request.url));
+const PUBLIC_PATHS = ["/login", "/register"];
+
+function redirectToLogin(request: NextRequest) {
+  return NextResponse.redirect(new URL("/login?reason=auth", request.url));
+}
+
+export async function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  if (PUBLIC_PATHS.some((path) => pathname.startsWith(path))) {
+    return NextResponse.next();
+  }
+
+  const sessionResponse = await fetch(`${getApiUrl()}/api/auth/get-session`, {
+    headers: {
+      cookie: request.headers.get("cookie") ?? "",
+    },
+    cache: "no-store",
+  });
+
+  if (!sessionResponse.ok) {
+    return redirectToLogin(request);
+  }
+
+  const payload = (await sessionResponse.json()) as {
+    session?: { user?: unknown } | null;
+  } | null;
+
+  if (!payload?.session?.user) {
+    return redirectToLogin(request);
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: "/((?!api|_next/static|_next/image|login|register|.*\\\\.png$).*)",
+  matcher: [
+    "/userprofile",
+    "/userprofile/:path*",
+    "/quizcreate",
+    "/quizcreate/:path*",
+    "/settings",
+    "/settings/:path*",
+  ],
 };

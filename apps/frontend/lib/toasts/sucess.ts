@@ -1,4 +1,5 @@
 import { showToast } from "nextjs-toast-notify";
+import type { ToastPosition, ToastTransition } from "@/lib/types/toasts";
 
 export function successToast(
   message: string,

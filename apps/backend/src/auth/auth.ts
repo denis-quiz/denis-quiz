@@ -5,6 +5,7 @@ import { account } from "../db/schema/account.js";
 import { session } from "../db/schema/session.js";
 import { user } from "../db/schema/user.js";
 export const auth = betterAuth({
+  trustedOrigins: ["http://localhost:3001"],
   database: drizzleAdapter(db, {
     provider: "pg", // or "mysql", "sqlite"
     schema: {

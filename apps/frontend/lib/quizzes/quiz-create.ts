@@ -1,5 +1,7 @@
+import { getApiUrl } from "@/lib/api";
+
 export async function quizCreate(title: string) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL!}/api/quizzes`, {
+  const res = await fetch(`${getApiUrl()}/api/quizzes`, {
     method: "POST",
     credentials: "include",
     headers: {
