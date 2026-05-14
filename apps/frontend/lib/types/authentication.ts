@@ -1,3 +1,12 @@
-export type SignInResult =
-  | { ok: true }
-  | { ok: false; message: string };
+export type registerState = {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  name: string;
+  image: string;
+};
+
+export type loginState = {
+  email: string;
+  password: string;
+};

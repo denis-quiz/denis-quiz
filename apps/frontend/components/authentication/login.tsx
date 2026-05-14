@@ -1,48 +1,43 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { signInUser } from "@/lib/auth/sign-in";
-import { errorToast } from "@/lib/toasts/error";
+import type { loginState } from "@/lib/types/authentication";
 import { successToast } from "@/lib/toasts/sucess";
+import { errorToast } from "@/lib/toasts/error";
 
 export default function SignInForm() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [form, setForm] = useState<loginState>({
+    email: "",
+    password: "",
+  });
 
-  useEffect(() => {
-    if (searchParams.get("reason") === "auth") {
-      errorToast("You must log in first");
-    }
-  }, [searchParams]);
+  const [loading, setLoading] = useState(false);
+
+  function updateField(field: keyof loginState, value: string) {
+    setForm((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const trimmedEmail = email.trim();
+    try {
+      setLoading(true);
 
-    if (!trimmedEmail || !password) {
-      errorToast("Email and password are required.");
-      return;
+      const result = await signInUser(form.email, form.password);
+
+      if (result.error) {
+        errorToast(result.error.message || "Invalid credentials");
+        return;
+      }
+
+      successToast("Signed in successfully");
+    } finally {
+      setLoading(false);
     }
-
-    setIsSubmitting(true);
-
-    const result = await signInUser(trimmedEmail, password);
-
-    setIsSubmitting(false);
-
-    if (!result.ok) {
-      errorToast(result.message);
-      return;
-    }
-
-    successToast("Signed in successfully.");
-    const nextPath = searchParams.get("next");
-    router.push(nextPath?.startsWith("/") ? nextPath : "/userprofile");
   }
 
   const inputClass =
@@ -52,58 +47,56 @@ export default function SignInForm() {
 
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 bg-black">
+      {/* Header */}
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-white">
           Sign into your account
         </h2>
       </div>
 
+      {/* Form */}
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Email */}
           <div>
             <label htmlFor="email" className={labelClass}>
               Email address
             </label>
-            <div className="mt-2">
-              <input
-                id="email"
-                type="email"
-                autoComplete="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className={inputClass}
-                disabled={isSubmitting}
-              />
-            </div>
+            <input
+              id="email"
+              type="email"
+              autoComplete="email"
+              value={form.email}
+              onChange={(e) => updateField("email", e.target.value)}
+              className={inputClass}
+            />
           </div>
 
+          {/* Password */}
           <div>
             <label htmlFor="password" className={labelClass}>
               Password
             </label>
-            <div className="mt-2">
-              <input
-                id="password"
-                type="password"
-                autoComplete="current-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className={inputClass}
-                disabled={isSubmitting}
-              />
-            </div>
+            <input
+              id="password"
+              type="password"
+              autoComplete="current-password"
+              value={form.password}
+              onChange={(e) => updateField("password", e.target.value)}
+              className={inputClass}
+            />
           </div>
 
-          <div>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {isSubmitting ? "Signing in..." : "Sign in"}
-            </button>
-          </div>
+          {/* Submit */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500 disabled:opacity-50"
+          >
+            {loading ? "Signing in..." : "Sign in"}
+          </button>
         </form>
+
         <h4 className="mt-6 text-center text-sm text-white">
           If you don&#39;t have account yet{" "}
           <a href="/register" className="hover:text-indigo-300 text-blue-500">

@@ -1,10 +1,19 @@
-import { Suspense } from "react";
+"use client";
+
+import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import SignInForm from "@/components/authentication/login";
+import { errorToast } from "@/lib/toasts/error";
 
 export default function LoginPage() {
-  return (
-    <Suspense fallback={<p className="p-6 text-white">Loading login...</p>}>
-      <SignInForm />
-    </Suspense>
-  );
+  const searchParams = useSearchParams();
+  const reason = searchParams.get("reason");
+
+  useEffect(() => {
+    if (reason === "auth") {
+      errorToast("You must log in first");
+    }
+  }, [reason]);
+
+  return <SignInForm />;
 }
