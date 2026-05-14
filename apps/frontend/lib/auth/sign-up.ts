@@ -6,7 +6,7 @@ export async function signUpUser(
   name: string,
   image: string,
 ) {
-  await signUp.email({
+  return signUp.email({
     email, // user email address
     password, // user password -> min 8 characters by default
     name, // user display name

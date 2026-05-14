@@ -28,13 +28,15 @@ export default function SignInForm() {
       setLoading(true);
 
       const result = await signInUser(form.email, form.password);
-
-      if (result.error) {
-        errorToast(result.error.message || "Invalid credentials");
+      console.log(result);
+      if (!result.ok) {
+        errorToast(result.message || "Invalid credentials");
         return;
       }
 
       successToast("Signed in successfully");
+    } catch (error) {
+      errorToast("something went wrong");
     } finally {
       setLoading(false);
     }
