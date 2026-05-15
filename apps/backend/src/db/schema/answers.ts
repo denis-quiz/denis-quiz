@@ -1,12 +1,12 @@
-import {integer, pgTable, text } from "drizzle-orm/pg-core";
+import { type AnyPgColumn, integer, pgTable, text } from "drizzle-orm/pg-core";
 import { questions } from "./questions.js";
 
 export const answers = pgTable("answers", {
-  id: integer("id").primaryKey(),
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
 
   questionId: integer("question_id")
     .notNull()
-    .references(() => questions.id, {
+    .references((): AnyPgColumn => questions.id, {
       onDelete: "cascade",
     }),
 

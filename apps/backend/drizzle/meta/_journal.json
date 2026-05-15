@@ -50,6 +50,13 @@
       "when": 1778843302503,
       "tag": "0006_salty_vivisector",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1778856852262,
+      "tag": "0007_overconfident_frightful_four",
+      "breakpoints": true
     }
   ]
 }
