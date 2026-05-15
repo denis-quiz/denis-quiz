@@ -4,6 +4,7 @@ import { useState } from "react";
 import { quizCreate } from "@/lib/quizzes/quiz-create";
 import { BannerAlert, TraditionalAlert } from "@/components/ui/alerts";
 import { buttonClass } from "@/lib/styles/form";
+import { contentWrapper, pageContainer } from "@/lib/styles/div";
 
 export default function QuizCreateForm() {
   const [title, setTitle] = useState("");
@@ -57,8 +58,8 @@ export default function QuizCreateForm() {
   }
 
   return (
-    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 bg-black">
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <div className={pageContainer}>
+      <div className={contentWrapper}>
         <form onSubmit={handleSubmit} className="space-y-6">
           <label htmlFor={title}>title</label>
           <input

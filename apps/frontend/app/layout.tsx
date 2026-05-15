@@ -21,7 +21,8 @@ export const metadata: Metadata = {
 
 export const sideBarLinks: SideBarLinkType[] = [
   { name: "Login", path: "/login" },
-  { name: "Quiz Creator", path: "/quizcreate" },
+  { name: "Quiz Creator", path: "/quiz/create" },
+  { name: "Quizzes List", path: "/quiz/list" },
   { name: "Profile", path: "/userprofile" },
   { name: "Settings", path: "/settings" },
 ];

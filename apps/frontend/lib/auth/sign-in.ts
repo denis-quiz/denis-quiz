@@ -34,7 +34,6 @@ export async function signInUser(
     const { data, error } = await signIn.email({
       email,
       password,
-      callbackURL: "/userprofile",
       rememberMe: false,
     });
 
