@@ -10,3 +10,8 @@ export type loginState = {
   email: string;
   password: string;
 };
+
+export type SignInResult = {
+  ok: boolean;
+  message?: string;
+};
