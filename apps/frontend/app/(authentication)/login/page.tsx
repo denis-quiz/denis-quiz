@@ -1,10 +1,5 @@
-import { Suspense } from "react";
-import LoginClient from "./LoginClient";
+import LoginClient from "@/app/(authentication)/login/LoginClient";
 
 export default function LoginPage() {
-  return (
-    <Suspense fallback={null}>
-      <LoginClient />
-    </Suspense>
-  );
+  return <LoginClient />;
 }
