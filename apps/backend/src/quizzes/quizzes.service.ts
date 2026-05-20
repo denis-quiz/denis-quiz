@@ -69,7 +69,7 @@ export async function postQuestion(c: Context, db: NeonHttpDatabase) {
         )
         .returning();
 
-      const correct = insertedAnswers[body.correctAnswerId];
+      const correct = insertedAnswers[body.correctAnswerIndex];
 
       if (!correct) {
         throw new Error("Invalid correctAnswerIndex");
@@ -83,7 +83,10 @@ export async function postQuestion(c: Context, db: NeonHttpDatabase) {
     });
 
     return c.json(result, 201);
-  } catch {
+  } catch (err) {
+    if (err instanceof Error) {
+      return c.json({ error: err.message }, 400);
+    }
     return c.json({ error: "Internal server error" }, 500);
   }
 }
