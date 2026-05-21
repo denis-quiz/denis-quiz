@@ -1,8 +1,8 @@
 import { Answer } from "@/lib/types/answer";
 
 export type Question = {
-  id: number;
+  tempId: string;
   content: string;
-  correctAnswerId: number | null;
   answers: Answer[];
+  correctAnswerIndex: number | null;
 };

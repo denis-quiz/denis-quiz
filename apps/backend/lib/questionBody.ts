@@ -1,8 +1,8 @@
 import * as z from "zod";
+import { AnswerBody } from "./answerBody.js";
 
 export const QuestionBody = z.object({
-  quizId: z.number().int(),
-  question: z.string().min(1),
-  answers: z.array(z.string().min(1)),
-  correctAnswerIndex: z.number().int().min(1),
+  content: z.string().min(1),
+  answers: z.array(AnswerBody).min(1),
+  correctAnswerIndex: z.number().int(),
 });

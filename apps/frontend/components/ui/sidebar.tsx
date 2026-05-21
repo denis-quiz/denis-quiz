@@ -29,12 +29,8 @@ export default function SideBar({ sideBarLinks }: SideBarProps) {
         className={`
             fixed top-0 left-0 z-50 h-full w-64
             bg-neutral-primary-soft border-e border-default
-        
-            /* mobile behavior */
             transform transition-transform duration-300
             ${open ? "translate-x-0" : "-translate-x-full"}
-        
-            /* desktop ALWAYS visible */
             sm:translate-x-0
           `}
       >

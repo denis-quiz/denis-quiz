@@ -8,138 +8,112 @@ type Props = {
 };
 
 export default function QuestionCreateForm({ questions, setQuestions }: Props) {
-  // ➕ Add question
   const addQuestion = () => {
     setQuestions((prev) => [
       ...prev,
       {
-        id: Date.now(),
+        tempId: crypto.randomUUID(),
         content: "",
-        correctAnswerId: null,
-        answers: [],
+        answers: [{ content: "" }],
+        correctAnswerIndex: 0,
       },
     ]);
   };
 
-  // ❌ Remove question
-  const removeQuestion = (questionId: number) => {
-    setQuestions((prev) => prev.filter((q) => q.id !== questionId));
+  const deleteQuestion = (tempId: string) => {
+    setQuestions((prev) => prev.filter((q) => q.tempId !== tempId));
   };
 
-  // ➕ Add answer
-  const addAnswer = (questionId: number) => {
+  const addAnswer = (questionId: string) => {
     setQuestions((prev) =>
       prev.map((q) =>
-        q.id === questionId
+        q.tempId === questionId
           ? {
               ...q,
-              answers: [
-                ...q.answers,
-                {
-                  id: Date.now(),
-                  content: "",
-                },
-              ],
+              answers: [...q.answers, { content: "" }],
             }
           : q,
       ),
     );
   };
 
-  // ❌ Remove answer
-  const removeAnswer = (questionId: number, answerId: number) => {
+  const deleteAnswer = (questionId: string, index: number) => {
     setQuestions((prev) =>
-      prev.map((q) =>
-        q.id === questionId
-          ? {
-              ...q,
-              answers: q.answers.filter((a) => a.id !== answerId),
-              // reset correct answer if it was deleted
-              correctAnswerId:
-                q.correctAnswerId === answerId ? null : q.correctAnswerId,
-            }
-          : q,
-      ),
+      prev.map((q) => {
+        if (q.tempId !== questionId) return q;
+
+        const newAnswers = q.answers.filter((_, i) => i !== index);
+
+        let correct = q.correctAnswerIndex;
+
+        if (correct === index) correct = 0;
+        else if (typeof correct === "number" && correct > index) correct--;
+
+        return {
+          ...q,
+          answers: newAnswers,
+          correctAnswerIndex: correct,
+        };
+      }),
     );
   };
 
-  // 🎯 Set correct answer
-  const setCorrectAnswer = (questionId: number, answerId: number) => {
+  const setCorrectAnswer = (questionId: string, index: number) => {
     setQuestions((prev) =>
       prev.map((q) =>
-        q.id === questionId
-          ? {
-              ...q,
-              correctAnswerId: answerId,
-            }
-          : q,
+        q.tempId === questionId ? { ...q, correctAnswerIndex: index } : q,
       ),
     );
   };
 
   return (
     <div className="space-y-6">
-      {questions.map((question) => (
-        <div key={question.id} className="border p-4 space-y-3">
-          {/* QUESTION INPUT */}
+      {questions.map((q) => (
+        <div key={q.tempId} className="border p-4 space-y-3">
           <input
-            type="text"
-            placeholder="Question"
-            value={question.content}
-            onChange={(e) => {
-              const value = e.target.value;
-
-              setQuestions((prev) =>
-                prev.map((q) =>
-                  q.id === question.id ? { ...q, content: value } : q,
-                ),
-              );
-            }}
             className="border p-2 w-full"
+            value={q.content}
+            onChange={(e) =>
+              setQuestions((prev) =>
+                prev.map((x) =>
+                  x.tempId === q.tempId ? { ...x, content: e.target.value } : x,
+                ),
+              )
+            }
           />
 
-          {/* ANSWERS */}
-          <div className="space-y-2 ml-4">
-            {question.answers.map((answer) => (
-              <div key={answer.id} className="flex gap-2 items-center">
-                {/* SELECT CORRECT ANSWER */}
+          <div className="space-y-2">
+            {q.answers.map((a, index) => (
+              <div key={index} className="flex gap-2 items-center">
                 <input
                   type="radio"
-                  name={`correct-${question.id}`}
-                  checked={question.correctAnswerId === answer.id}
-                  onChange={() => setCorrectAnswer(question.id, answer.id)}
+                  name={q.tempId}
+                  checked={q.correctAnswerIndex === index}
+                  onChange={() => setCorrectAnswer(q.tempId, index)}
                 />
 
-                {/* ANSWER TEXT */}
                 <input
-                  type="text"
-                  placeholder="Answer"
-                  value={answer.content}
-                  onChange={(e) => {
-                    const value = e.target.value;
-
+                  className="border p-2 flex-1"
+                  value={a.content}
+                  onChange={(e) =>
                     setQuestions((prev) =>
-                      prev.map((q) =>
-                        q.id === question.id
+                      prev.map((x) =>
+                        x.tempId === q.tempId
                           ? {
-                              ...q,
-                              answers: q.answers.map((a) =>
-                                a.id === answer.id
-                                  ? { ...a, content: value }
-                                  : a,
+                              ...x,
+                              answers: x.answers.map((y, i) =>
+                                i === index ? { content: e.target.value } : y,
                               ),
                             }
-                          : q,
+                          : x,
                       ),
-                    );
-                  }}
-                  className="border p-2 flex-1"
+                    )
+                  }
                 />
 
                 <button
                   type="button"
-                  onClick={() => removeAnswer(question.id, answer.id)}
-                  className="text-red-500"
+                  onClick={() => deleteAnswer(q.tempId, index)}
                 >
                   delete
                 </button>
@@ -147,29 +121,17 @@ export default function QuestionCreateForm({ questions, setQuestions }: Props) {
             ))}
           </div>
 
-          {/* ACTIONS */}
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => addAnswer(question.id)}
-              className="text-blue-500"
-            >
-              add answer
-            </button>
+          <button type="button" onClick={() => addAnswer(q.tempId)}>
+            add answer
+          </button>
 
-            <button
-              type="button"
-              onClick={() => removeQuestion(question.id)}
-              className="text-red-500"
-            >
-              delete question
-            </button>
-          </div>
+          <button type="button" onClick={() => deleteQuestion(q.tempId)}>
+            delete question
+          </button>
         </div>
       ))}
 
-      {/* ADD QUESTION */}
-      <button type="button" onClick={addQuestion} className="border px-3 py-2">
+      <button type="button" onClick={addQuestion}>
         add question
       </button>
     </div>

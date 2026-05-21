@@ -1,12 +1,7 @@
-import { useSession } from "@/lib/auth/auth-client"; // import the auth client
+import { useSession } from "@/lib/auth/auth-client";
 
 function User() {
-  const {
-    data: session,
-    isPending, //loading state
-    error, //error object
-    refetch, //refetch the session
-  } = useSession();
+  const { data: session, isPending, error, refetch } = useSession();
 }
 
 export default User;

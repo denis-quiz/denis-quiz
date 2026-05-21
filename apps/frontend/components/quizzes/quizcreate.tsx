@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { quizCreate } from "@/lib/quizzes/quiz-create";
+import { quizCreate, validateQuizPayload } from "@/lib/quizzes/quiz-create";
 import { buttonClass } from "@/lib/styles/form";
 import { errorToast } from "@/lib/toasts/error";
 import { successToast } from "@/lib/toasts/sucess";
@@ -15,13 +15,9 @@ export default function QuizCreateForm() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (!title.trim()) {
-      errorToast("Title is required");
-      return;
-    }
-
-    if (title.trim().length < 3) {
-      errorToast("Title must be at least 3 characters long");
+    const validationError = validateQuizPayload(title, questions);
+    if (validationError) {
+      errorToast(validationError);
       return;
     }
 
@@ -35,8 +31,8 @@ export default function QuizCreateForm() {
 
       setTitle("");
       setQuestions([]);
-    } catch {
-      errorToast("Something went wrong");
+    } catch (err) {
+      errorToast(err instanceof Error ? err.message : "Something went wrong");
     }
   }
 

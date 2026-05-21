@@ -1,4 +1,4 @@
-import { type AnyPgColumn, integer, pgTable, text } from "drizzle-orm/pg-core";
+import {  integer, pgTable, text } from "drizzle-orm/pg-core";
 import { questions } from "./questions.js";
 
 export const answers = pgTable("answers", {
@@ -6,7 +6,7 @@ export const answers = pgTable("answers", {
 
   questionId: integer("question_id")
     .notNull()
-    .references((): AnyPgColumn => questions.id, {
+    .references(() => questions.id, {
       onDelete: "cascade",
     }),
 
