@@ -1,6 +1,7 @@
 import { getApiUrl } from "@/lib/api";
+import {Question} from "@/lib/types/question";
 
-export async function quizCreate(title: string) {
+export async function quizCreate(title: { title: string; questions: Question[] }) {
   const res = await fetch(`${getApiUrl()}/api/quizzes`, {
     method: "POST",
     credentials: "include",
