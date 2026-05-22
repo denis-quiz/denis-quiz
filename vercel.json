@@ -8,8 +8,8 @@
     "backend": {
       "root": "apps/backend",
       "routePrefix": "/_/backend",
-      "framework": "node",
-      "entrypoint": "dist/app.js"
+      "framework": "hono",
+      "entrypoint": "src/app.js"
     }
   }
 }
