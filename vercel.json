@@ -9,7 +9,7 @@
       "root": "apps/backend",
       "routePrefix": "/_/backend",
       "framework": "hono",
-      "entrypoint": "src/app.js"
+      "entrypoint": "src/app.ts"
     }
   }
 }
