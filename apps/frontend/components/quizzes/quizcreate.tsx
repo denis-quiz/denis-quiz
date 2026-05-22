@@ -1,66 +1,46 @@
 "use client";
 
 import { useState } from "react";
-import { quizCreate } from "@/lib/quizzes/quiz-create";
-import { BannerAlert, TraditionalAlert } from "@/components/ui/alerts";
+import { quizCreate, validateQuizPayload } from "@/lib/quizzes/quiz-create";
 import { buttonClass } from "@/lib/styles/form";
+import { errorToast } from "@/lib/toasts/error";
+import { successToast } from "@/lib/toasts/sucess";
+import QuestionCreateForm from "@/components/quizzes/questioncreate";
+import { Question } from "@/lib/types/question";
 
 export default function QuizCreateForm() {
   const [title, setTitle] = useState("");
-
-  const [alert, setAlert] = useState<{
-    type: "error" | "success";
-    title: string;
-    text: string;
-  } | null>(null);
+  const [questions, setQuestions] = useState<Question[]>([]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    setAlert(null);
-
-    if (!title.trim()) {
-      setAlert({
-        type: "error",
-        title: "Error",
-        text: "Name is required",
-      });
-      return;
-    }
-
-    if (title.trim().length < 3) {
-      setAlert({
-        type: "error",
-        title: "Error",
-        text: "Name must be at least 3 characters long",
-      });
+    const validationError = validateQuizPayload(title, questions);
+    if (validationError) {
+      errorToast(validationError);
       return;
     }
 
     try {
-      await quizCreate(title.trim());
-
-      setAlert({
-        type: "success",
-        title: "Success",
-        text: "Quiz created successfully",
+      await quizCreate({
+        title: title.trim(),
+        questions,
       });
+
+      successToast("Quiz created successfully");
 
       setTitle("");
+      setQuestions([]);
     } catch (err) {
-      setAlert({
-        type: "error",
-        title: "Error",
-        text: err instanceof Error ? err.message : "Something went wrong",
-      });
+      errorToast(err instanceof Error ? err.message : "Something went wrong");
     }
   }
 
   return (
-    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 bg-black">
+    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form onSubmit={handleSubmit} className="space-y-6">
-          <label htmlFor={title}>title</label>
+          <label htmlFor="title">title</label>
           <input
             id="title"
             type="text"
@@ -69,19 +49,15 @@ export default function QuizCreateForm() {
             className="border p-2 w-full"
           />
 
+          <QuestionCreateForm
+            questions={questions}
+            setQuestions={setQuestions}
+          />
+
           <button type="submit" className={buttonClass}>
             create
           </button>
         </form>
-        <div className="mt-4">
-          {alert?.type === "error" && (
-            <TraditionalAlert title={alert.title} text={alert.text} />
-          )}
-
-          {alert?.type === "success" && (
-            <BannerAlert title={alert.title} text={alert.text} />
-          )}
-        </div>
       </div>
     </div>
   );

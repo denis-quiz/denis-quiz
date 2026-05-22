@@ -68,7 +68,6 @@ export default function SignUpForm() {
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Name */}
           <div>
             <label className={labelClass}>Name</label>
             <input
@@ -78,7 +77,6 @@ export default function SignUpForm() {
             />
           </div>
 
-          {/* Email */}
           <div>
             <label className={labelClass}>Email address</label>
             <input
@@ -89,7 +87,6 @@ export default function SignUpForm() {
             />
           </div>
 
-          {/* Password */}
           <div>
             <label className={labelClass}>Password</label>
             <input
@@ -100,7 +97,6 @@ export default function SignUpForm() {
             />
           </div>
 
-          {/* Confirm Password */}
           <div>
             <label className={labelClass}>Confirm password</label>
             <input
@@ -111,7 +107,6 @@ export default function SignUpForm() {
             />
           </div>
 
-          {/* Image */}
           <div>
             <label className={labelClass}>Image URL (optional)</label>
             <input
@@ -121,7 +116,6 @@ export default function SignUpForm() {
             />
           </div>
 
-          {/* Submit */}
           <button type="submit" className={buttonClass} disabled={loading}>
             {loading ? "Creating account..." : "Sign up"}
           </button>

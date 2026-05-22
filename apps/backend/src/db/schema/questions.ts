@@ -9,7 +9,9 @@ export const questions = pgTable("questions", {
     .notNull()
     .references(() => quizzes.id, { onDelete: "cascade" }),
 
-  answerId: integer("answer_id").references((): AnyPgColumn => answers.id),
-
   content: text("content").notNull(),
+
+  correctAnswerId: integer("answer_id").references(
+    (): AnyPgColumn => answers.id,
+  ),
 });

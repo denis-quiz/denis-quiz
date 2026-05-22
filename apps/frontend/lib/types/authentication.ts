@@ -11,7 +11,11 @@ export type loginState = {
   password: string;
 };
 
-export type SignInResult = {
-  ok: boolean;
-  message?: string;
-};
+export type SignInResult =
+  | {
+      ok: true;
+    }
+  | {
+      ok: false;
+      message: string;
+    };
