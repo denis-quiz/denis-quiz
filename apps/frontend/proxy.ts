@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getApiUrl } from "@/lib/api";
+import { SessionResponse } from "better-auth/client";
 
 const PUBLIC_PATHS = ["/login", "/register"];
 
@@ -11,7 +12,7 @@ function redirectToLogin(request: NextRequest) {
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  if (PUBLIC_PATHS.some((path) => pathname.startsWith(path))) {
+  if (PUBLIC_PATHS.some((p) => pathname.startsWith(p))) {
     return NextResponse.next();
   }
 
@@ -26,11 +27,9 @@ export async function proxy(request: NextRequest) {
     return redirectToLogin(request);
   }
 
-  const payload = (await sessionResponse.json()) as {
-    session?: { user?: unknown } | null;
-  } | null;
+  const payload: SessionResponse = await sessionResponse.json();
 
-  if (!payload?.session?.user) {
+  if (!payload?.session || !payload?.user) {
     return redirectToLogin(request);
   }
 
@@ -38,12 +37,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    "/userprofile",
-    "/userprofile/:path*",
-    "/quizcreate",
-    "/quizcreate/:path*",
-    "/settings",
-    "/settings/:path*",
-  ],
+  matcher: ["/userprofile/:path*", "/quiz/:path*", "/settings/:path*"],
 };
